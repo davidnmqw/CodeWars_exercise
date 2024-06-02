@@ -74,11 +74,6 @@ for i in text:
                 break
 x = sum(1 for i in text if i in slovnik.keys())
 y = sum(1 for i in text if i in slovnik.values())
-#for i in text:
-#    if i in slovnik.keys():
-#        x += 1
-#    elif i in slovnik.values():
-#        y += 1
 if x == y:
     print(len(a) == x)
 else:
