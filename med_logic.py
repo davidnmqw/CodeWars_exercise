@@ -78,3 +78,24 @@ if x == y:
     print(len(a) == x)
 else:
     print(False)
+
+# Codewars tasks
+lst = [1, -2, 3, -4, 5]
+def invert(lst):
+    return [i*-1 for i in lst]
+print(invert(lst))
+
+def array_diff(a, b):
+    return [i for i in a if i not in b]
+a, b = [1,1,2], [2]
+print(array_diff(a,b))
+
+ages = [2,13,15,87,43,53]
+print(min(ages), max(ages), max(ages)-min(ages))
+
+text = "The sunset sets at twelve o' clock."
+def al_position(text):
+    text = text.lower()
+    al = "abcdefghijklmnopqrstuvwxyz"
+    return [(al.index(x) + 1) for x in text if x in al]
+print(al_position(text))
