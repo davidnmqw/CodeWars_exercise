@@ -11,3 +11,27 @@ t2 = "xyzzzzabc"
 def lngs(t1, t2):
     return "".join(sorted(set(t1 + t2)))             #úprava s gpt
 print(lngs(t1, t2))
+
+import random       #telefonní čílo generátor
+r = list(range(10))
+s, s1, s2 = "".join(map(str, random.choices(r, k=3))), "".join(map(str, random.choices(r, k=3))), "".join(map(str, random.choices(r, k=4)))
+s1 = "".join(map(str, random.choices(r, k=3)))
+s2 = "".join(map(str, random.choices(r, k=4)))
+print(f"{s} {s1}-{s2}")
+
+#growth of a population
+p = 1000
+per = 0.02
+income = 50
+year = 0
+while p <= 1200: p += p * per + income; year += 1
+print(year)
+
+#two numbers
+a = list(range(13,50))
+b = 64
+def two_sum(numbers, target):
+    c = numbers
+    d = target
+    return (c, d)
+print(two_sum(a, b))
