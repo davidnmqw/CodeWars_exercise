@@ -56,18 +56,6 @@ for idx, i in enumerate(s):     #klíčem bylo použít funkci enumerate
 t += s[f:]
 print(" ".join(t.split()))
 
-#for i in s:
-#    if i == i.upper() and i != " " and s[s.index(i) - 1] != " ":
-#        t += s[:s.index(i)] + " "
-#        s = s[s.index(i):]
-#t += s
-#print(t)
-
-#z = " "
-#for i in s:
-#    if i == i.upper() and i != " " and z != " ":
-#        t += s[:s.index(i)] + " "
-#        s = s[s.index(i):]
-#    z = i
-#t += s
-#print(" ".join(t.split()))
+print("podle CodeWars")
+s = "different Thing   LittleTry"
+print("".join([" " + c if c.isupper() else c.replace(" ","") if c == " " else c for c in s]))
