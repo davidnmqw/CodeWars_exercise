@@ -59,3 +59,20 @@ print(" ".join(t.split()))
 print("podle CodeWars")
 s = "different Thing   LittleTry"
 print("".join([" " + c if c.isupper() else c.replace(" ","") if c == " " else c for c in s]))
+
+a = [1, 0, 1, 2, 0, 1, 3]
+for i in a:
+    if i == 0:
+        a.append(i)             #moje logika
+        a.remove(i)
+print(a)
+
+def zero(a):
+    return [i for i in a if i != 0] + [i for i in a if i == 0]
+a = [1, 0, 1, 2, 0, 1, 3]       #úprava gpt na jeden řádek
+print(zero(a))
+
+def zero(a):
+    return [x for x in a if x] + [0]*a.count(0)
+a = [1, 0, 1, 2, 0, 1, 3]           #podle codewars
+print(zero(a))
