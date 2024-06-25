@@ -131,3 +131,6 @@ for word in text:       #with help of gpt
     elif all(i not in string.punctuation for i in word):
         result.append(word[1:len(word)] + word[0] + "ay")
 print(" ".join(result))
+    #codeWars
+text = "Pig wurst and !"    #když je interpunkce hned za slovem tak nefunguje
+print(" ".join(x[1:] + x[0] + "ay" if x.isalnum() else x for x in text.split()))
