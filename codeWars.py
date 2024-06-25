@@ -121,11 +121,13 @@ for word in text:
             break
 print(newt.strip())
     #třetí pokus - zkrácení
-text = "Pig, wurst !".split()
+text = "Pig, wurst and !".split()
 result = []
-for word in text:
+for word in text:       #with help of gpt
     if word in string.punctuation:
         result.append(word)
     elif any(i in string.punctuation for i in word):
-        result.append(word[1:len(word)-1] + word[0] + "ay" + word[any(string.punctuation)])
+        result.append(word[1:len(word)-1] + word[0] + "ay" + word[-1])
     elif all(i not in string.punctuation for i in word):
+        result.append(word[1:len(word)] + word[0] + "ay")
+print(" ".join(result))
