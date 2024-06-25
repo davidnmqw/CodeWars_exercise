@@ -76,3 +76,40 @@ def zero(a):
     return [x for x in a if x] + [0]*a.count(0)
 a = [1, 0, 1, 2, 0, 1, 3]           #podle codewars
 print(zero(a))
+
+#Roman numeral translator
+#num = reversed(str(15))      #MCMLXV
+#roman = {"1":"I", "5":"V", "10":"X", "50":"L", "100":"C", "500":"D", "1000":"M"}
+#fin = []
+#for i in num:
+#    a = 6
+#    fin.append(roman[i])       neumím to vyřešit
+#    print(roman.index(i))
+#    #roman = roman[roman.index(i):]
+#print("".join(fin))
+
+#multiples 3 or 5
+num = 200
+i = total = 0
+while i < num:
+    if i % 3 == 0 or i % 5 == 0:
+        total += i
+    i += 1
+print(total)
+
+    #better with gpt
+num = 200
+print(sum(i for i in range(num) if i % 3 == 0 or i % 5 == 0))
+
+#move first letter to end of the word and add "ay" other unchanged
+import string
+text = "Pig latin is cool !".split()    #rozdělí text na slova
+for i in text:
+    maping = str.maketrans("", "", string.punctuation)
+    t = i.translate(maping)     #toto odstraňuje interpunkci
+    print(t)
+    for j in i:         #logika práce se znaky
+        i += j + "ay"
+        i = i[1:]
+        print(i)
+        break
