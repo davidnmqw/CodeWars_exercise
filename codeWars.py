@@ -103,18 +103,29 @@ print(sum(i for i in range(num) if i % 3 == 0 or i % 5 == 0))
 
 #move first letter to end of the word and add "ay" other unchanged
 import string
-text = "Pig !".split()    #rozdělí text na slova
-orig = ""
-for i in text:
-    maping = str.maketrans("", "", string.punctuation)
-    for p in i:     #když je ve slově interpunkce, uloží původní slovo
-        if p in string.punctuation:
-            orig = i
-            #print(orig)
-    i = i.translate(maping)     #toto odstraňuje interpunkci
-    for j in i:         #logika práce se znaky
-        i += j + "ay"
-        i = i[1:] + orig[len(orig) - 1:]
-        orig = ""
-        print(i)
-        break
+    #druhý pokus, už funkční
+text = "Pig, wurst !".split()
+c, newt = 0, ""
+for word in text:
+    for letter in word:
+        if any(letter in string.punctuation for letter in word) and len(word) > 1:
+            word = word[1:len(word)-1] + word[0] + "ay" + word[-1]
+            newt += word + " "
+            break
+        elif letter in string.punctuation:
+            newt += word + " "
+            break
+        elif all(letter not in string.punctuation for letter in word):
+            word = word[1:len(word)] + word[0] + "ay"
+            newt += word + " "
+            break
+print(newt.strip())
+    #třetí pokus - zkrácení
+text = "Pig, wurst !".split()
+result = []
+for word in text:
+    if word in string.punctuation:
+        result.append(word)
+    elif any(i in string.punctuation for i in word):
+        result.append(word[1:len(word)-1] + word[0] + "ay" + word[any(string.punctuation)])
+    elif all(i not in string.punctuation for i in word):
