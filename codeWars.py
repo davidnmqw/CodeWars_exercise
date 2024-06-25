@@ -103,13 +103,18 @@ print(sum(i for i in range(num) if i % 3 == 0 or i % 5 == 0))
 
 #move first letter to end of the word and add "ay" other unchanged
 import string
-text = "Pig latin is cool !".split()    #rozdělí text na slova
+text = "Pig !".split()    #rozdělí text na slova
+orig = ""
 for i in text:
     maping = str.maketrans("", "", string.punctuation)
-    t = i.translate(maping)     #toto odstraňuje interpunkci
-    print(t)
+    for p in i:     #když je ve slově interpunkce, uloží původní slovo
+        if p in string.punctuation:
+            orig = i
+            #print(orig)
+    i = i.translate(maping)     #toto odstraňuje interpunkci
     for j in i:         #logika práce se znaky
         i += j + "ay"
-        i = i[1:]
+        i = i[1:] + orig[len(orig) - 1:]
+        orig = ""
         print(i)
         break
