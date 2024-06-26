@@ -134,3 +134,11 @@ print(" ".join(result))
     #codeWars
 text = "Pig wurst and !"    #když je interpunkce hned za slovem tak nefunguje
 print(" ".join(x[1:] + x[0] + "ay" if x.isalnum() else x for x in text.split()))
+
+#rgb to hexadecimal
+r = -255
+g = 24
+b = 0
+podmínka = lambda x: 0 if x < 0 else 255 if x > 255 else x
+r, g, b = podmínka(r), podmínka(g), podmínka(b)
+print(format(r, "02X") + format(g, "02X") + format(b, "02X"))
