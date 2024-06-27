@@ -142,3 +142,20 @@ b = 0
 podmínka = lambda x: 0 if x < 0 else 255 if x > 255 else x
 r, g, b = podmínka(r), podmínka(g), podmínka(b)
 print(format(r, "02X") + format(g, "02X") + format(b, "02X"))
+
+#next bigger number with same digit
+n = a = 34
+n = a = [int(i) for i in str(n)]    #převod na iterable
+#n = int("".join(map(str, n)))       #převod na číslo
+a = int("".join(map(str, a)))
+while a < 1000:
+    a += 1
+    a = [int(i) for i in str(a)]
+    if sorted(a) == sorted(n):
+        print(int("".join(map(str, a))))
+        break
+    a = int("".join(map(str, a)))
+"""while a < 200:
+    a += 1
+    if sorted(n) == sorted(a):
+        print(a)"""
