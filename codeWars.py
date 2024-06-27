@@ -144,18 +144,14 @@ r, g, b = podmínka(r), podmínka(g), podmínka(b)
 print(format(r, "02X") + format(g, "02X") + format(b, "02X"))
 
 #next bigger number with same digit
-n = a = 34
-citer = lambda x: [int(i) for i in str(x)]
-cnum = lambda x: int("".join(map(str, x)))
-testiter = citer(n)
-print(testiter)
-n = a = [int(i) for i in str(n)]    #převod na iterable
-#n = int("".join(map(str, n)))       #převod na číslo
-a = int("".join(map(str, a)))
+n = a = 213
+citer = lambda x: [int(i) for i in str(x)]  #convert to iterable
+cnum = lambda x: int("".join(map(str, x)))  #convert to number
+n = citer(n)
 while a < 1000:
     a += 1
-    a = [int(i) for i in str(a)]
+    a = citer(a)
     if sorted(a) == sorted(n):
-        print(int("".join(map(str, a))))    #ty převody nahradit lambda funkcí
+        print(cnum(a))
         break
-    a = int("".join(map(str, a)))
+    a = cnum(a)
