@@ -144,14 +144,15 @@ r, g, b = podmínka(r), podmínka(g), podmínka(b)
 print(format(r, "02X") + format(g, "02X") + format(b, "02X"))
 
 #next bigger number with same digit
-n = a = 213
+n = a = 21385048424
 citer = lambda x: [int(i) for i in str(x)]  #convert to iterable
 cnum = lambda x: int("".join(map(str, x)))  #convert to number
+a = citer(a)
 n = citer(n)
-while a < 1000:
-    a += 1
+while cnum(sorted(n, reverse=True)) > cnum(a):     #udělat podmínku tak aby to fungovalo pro obří čísla
+    a = cnum(a) + 1
     a = citer(a)
     if sorted(a) == sorted(n):
         print(cnum(a))
-        break
-    a = cnum(a)
+        quit()
+print(-1)
