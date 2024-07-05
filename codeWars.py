@@ -143,6 +143,61 @@ podmínka = lambda x: 0 if x < 0 else 255 if x > 255 else x
 r, g, b = podmínka(r), podmínka(g), podmínka(b)
 print(format(r, "02X") + format(g, "02X") + format(b, "02X"))
 
+import time
+#direction reduction
+# def dir_reduc(arr):
+#     dic = {
+#         "NORTH" : "SOUTH",
+#         "EAST" : "WEST",
+#         "SOUTH" : "NORTH",
+#         "WEST" : "EAST"
+#     }   #použít while loop při manipulaci prvků
+#     for idx, i in enumerate(arr[:-1]):
+#         a, b = i, dic[arr[idx + 1]]
+#         if a == b:
+#             arr.remove(arr[idx])
+#             arr.remove(arr[idx])
+#             arr = arr
+#     print(arr)
+# arr = ["NORTH", "SOUTH", "EAST", "EAST", "WEST", "NORTH", "WEST"]
+#dir_reduc(arr)
+    #druhý pokus - OK
+start = time.time()
+def dir_reduc(arr):
+    dic = {
+        "NORTH" : "SOUTH",
+        "EAST" : "WEST",
+        "SOUTH" : "NORTH",
+        "WEST" : "EAST"
+    }
+    idx = 0
+    while idx < len(arr[:-1]):
+        if arr[idx] == dic[arr[idx + 1]]:
+            arr.pop(idx); arr.pop(idx); idx = 0
+            continue
+        idx += 1
+    return arr
+arr = ["NORTH", "EAST", "NORTH", "EAST", "WEST", "WEST", "EAST", "EAST", "WEST", "SOUTH"]
+print(dir_reduc(arr)) #["NORTH", "EAST"]
+end = time.time()
+print(f"David trval: {end - start} sekund")
+
+    #verze GPT
+start = time.time()
+def dir_reduc_gpt(arr):
+    dic = {"NORTH": "SOUTH", "EAST": "WEST", "SOUTH": "NORTH", "WEST": "EAST"}
+    stack = []
+    for direction in arr:
+        if stack and stack[-1] == dic[direction]:
+            stack.pop()
+        else:
+            stack.append(direction)
+    print(stack)
+arr = ["NORTH", "EAST", "NORTH", "EAST", "WEST", "WEST", "EAST", "EAST", "WEST", "SOUTH"]
+dir_reduc_gpt(arr)
+end = time.time()
+print(f"GPT trval: {end - start} sekund")
+
 #next bigger number with same digit
 # n = a = 21385048424
 # citer = lambda x: [int(i) for i in str(x)]  #convert to iterable
@@ -163,7 +218,7 @@ def nextf(n):
     a = n
     citer = lambda x: [i for i in str(x)]  #odebral jsem int(i)
     cnum = lambda x: int("".join(x))  #odebral jsem map(str, x)
-    a = citer(a)                #zkusit přes timeit porovnat rychlost kódu
+    a = citer(n)                #zkusit přes timeit porovnat rychlost kódu
     n = citer(n)
     while cnum(sorted(n, reverse=True)) > cnum(a):
         a = cnum(a) + 1
@@ -172,74 +227,13 @@ def nextf(n):
             return cnum(a)
             quit()
     return -1
-print(nextf(853977))
+print(nextf(8539775))
 end = time.time()
 print(f"trvalo to: {end - start} sekund")
 
-start = time.time()
-fibonacci_cache = {}
-def fibanocci(n):
-    if n in fibonacci_cache:
-        return fibonacci_cache[n]
-    if n == 1 or n == 2:
-        value = 1
-    elif n > 2:
-        value = fibanocci(n-1) + fibanocci(n-2)
-    fibonacci_cache[n] = value
-    return value
-print(fibanocci(10))
-end = time.time()
-print(f"trvalo to: {end - start} sekund")
-
-#direction reduction
-def dir_reduc(arr):
-    dic = {
-        "NORTH" : "SOUTH",
-        "EAST" : "WEST",
-        "SOUTH" : "NORTH",
-        "WEST" : "EAST"
-    }   #použít while loop při manipulaci prvků
-    for idx, i in enumerate(arr[:-1]):
-        a, b = i, dic[arr[idx + 1]]
-        if a == b:
-            arr.remove(arr[idx])
-            arr.remove(arr[idx])
-            arr = arr
-    print(arr)
-arr = ["NORTH", "SOUTH", "EAST", "EAST", "WEST", "NORTH", "WEST"]
-#dir_reduc(arr)
-    #druhý pokus - OK
-start = time.time()
-def dir_reduc(arr):
-    dic = {
-        "NORTH" : "SOUTH",
-        "EAST" : "WEST",
-        "SOUTH" : "NORTH",
-        "WEST" : "EAST"
-    }
-    idx = 0
-    while idx < len(arr[:-1]):
-        if arr[idx] == dic[arr[idx + 1]]:
-            arr.pop(idx); arr.pop(idx); idx = 0
-            continue
-        idx += 1
-    print(arr)
-arr = ["NORTH", "EAST", "NORTH", "EAST", "WEST", "WEST", "EAST", "EAST", "WEST", "SOUTH"]
-dir_reduc(arr) #["NORTH", "EAST"]
-end = time.time()
-print(f"David trval: {end - start} sekund")
-    #verze GPT
-start = time.time()
-def dir_reduc_gpt(arr):
-    dic = {"NORTH": "SOUTH", "EAST": "WEST", "SOUTH": "NORTH", "WEST": "EAST"}
-    stack = []
-    for direction in arr:
-        if stack and stack[-1] == dic[direction]:
-            stack.pop()
-        else:
-            stack.append(direction)
-    print(stack)
-arr = ["NORTH", "EAST", "NORTH", "EAST", "WEST", "WEST", "EAST", "EAST", "WEST", "SOUTH"]
-dir_reduc_gpt(arr)
-end = time.time()
-print(f"GPT trval: {end - start} sekund")
+from line_profiler import LineProfiler
+profiler = LineProfiler()
+profiler.add_function(nextf)
+profiler_wrapper = profiler(nextf)
+result = profiler_wrapper(8539775)
+profiler.print_stats()
