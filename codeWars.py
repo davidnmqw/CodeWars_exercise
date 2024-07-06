@@ -215,19 +215,17 @@ print(f"GPT trval: {end - start} sekund")
 import time
 start = time.time()
 def nextf(n):
-    a = n
     citer = lambda x: [i for i in str(x)]  #odebral jsem int(i)
     cnum = lambda x: int("".join(x))  #odebral jsem map(str, x)
-    a = citer(n)                #zkusit přes timeit porovnat rychlost kódu
-    n = citer(n)
+    a = n = citer(n)                #zkusit přes timeit porovnat rychlost kódu
     while cnum(sorted(n, reverse=True)) > cnum(a):
         a = cnum(a) + 1
-        a = citer(a)
+        a = citer(a)        #->trvá moc dlouho!!!
         if sorted(a) == sorted(n):
             return cnum(a)
             quit()
     return -1
-print(nextf(8539775))
+print(nextf(85397755))
 end = time.time()
 print(f"trvalo to: {end - start} sekund")
 
@@ -236,4 +234,45 @@ profiler = LineProfiler()
 profiler.add_function(nextf)
 profiler_wrapper = profiler(nextf)
 result = profiler_wrapper(8539775)
-profiler.print_stats()
+#profiler.print_stats()
+    #třetí pokus
+start = time.time()
+def nextf(n):
+    citer = lambda x: [int(i) for i in str(x)]  #odebral jsem int(i)
+    cnum = lambda x: int("".join(map(str,x)))  #odebral jsem map(str, x)
+    a = n = citer(n)                #zkusit přes timeit porovnat rychlost kódu
+    while cnum(sorted(n, reverse=True)) > cnum(a):
+        a = list(reversed(a))
+        for idx, i in enumerate((a)):
+            if i != 9:
+                a[idx] += 1
+                break
+            else:
+                if idx + 1 == len(a):
+                    a.append(1)
+                    a[-2] = 0
+                    break
+                else:
+                    a[idx] = 0
+        a = list(reversed(a))
+        if sorted(a) == sorted(n):
+            return cnum(a)
+            quit()
+    return -1
+print(nextf(85397755))
+end = time.time()
+print(f"trvalo to: {end - start} sekund")
+
+a = list(reversed([2,1,9]))
+for idx, i in enumerate((a)):
+    if i != 9:
+        a[idx] += 1
+        break
+    else:
+        if idx + 1 == len(a):
+            a.append(1)
+            a[-2] = 0
+            break
+        else:
+            a[idx] = 0
+print(list(reversed(a)))
