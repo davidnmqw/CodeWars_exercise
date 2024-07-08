@@ -229,50 +229,98 @@ print(nextf(85397755))
 end = time.time()
 print(f"trvalo to: {end - start} sekund")
 
+    #třetí pokus
+#start = time.time()
+def nextf(n):
+    citer = lambda x: [int(i) for i in str(x)]  #odebral jsem int(i)
+    cnum = lambda x: int("".join(map(str, x)))  #odebral jsem map(str, x)
+    a = n = m = citer(n)                 #zkusit přes timeit porovnat rychlost kódu
+    n = sorted(n, reverse=True)
+    m = sorted(m)
+    while cnum(n) > cnum(a):
+        a = add_one(a)
+        if sorted(a) == m:
+            return cnum(a)
+            quit()
+    return -1
+def add_one(a): #přičte 1 k iterable
+    a = list(reversed(a))
+    for idx, i in enumerate((a)):
+        if i != 9:
+            a[idx] += 1
+            break
+        else:
+            if idx + 1 == len(a):
+                a.append(1)
+                a[-2] = 0
+                break
+            else:
+                a[idx] = 0
+    return list(reversed(a))
+#print(nextf(85397755))
+end = time.time()
+#print(f"3. pokus trvalo to: {end - start} sekund")
+
 from line_profiler import LineProfiler
 profiler = LineProfiler()
 profiler.add_function(nextf)
 profiler_wrapper = profiler(nextf)
-result = profiler_wrapper(8539775)
+result = profiler_wrapper(853977)
 #profiler.print_stats()
-    #třetí pokus
-start = time.time()
-def nextf(n):
-    citer = lambda x: [int(i) for i in str(x)]  #odebral jsem int(i)
-    cnum = lambda x: int("".join(map(str,x)))  #odebral jsem map(str, x)
-    a = n = citer(n)                #zkusit přes timeit porovnat rychlost kódu
-    while cnum(sorted(n, reverse=True)) > cnum(a):
-        a = list(reversed(a))
-        for idx, i in enumerate((a)):
-            if i != 9:
-                a[idx] += 1
+    # od začátku, pouze manipulace pole
+n = [1,2] #[int(i) for i in str(n)]# původní které navyšuji
+m = sorted(n)               # největší číslo
+for idx, i in enumerate(n):
+    if i >= m[idx]:
+        None
+    else:   # příčte 1 k itterable
+        n = list(reversed(n))
+        for idy, j in enumerate((n)):
+            if j != 9:
+                n[idx] += 1
                 break
             else:
-                if idx + 1 == len(a):
-                    a.append(1)
-                    a[-2] = 0
+                if idy + 1 == len(n):
+                    n.append(1)
+                    n[-2] = 0
                     break
                 else:
-                    a[idx] = 0
-        a = list(reversed(a))
-        if sorted(a) == sorted(n):
-            return cnum(a)
-            quit()
-    return -1
-print(nextf(85397755))
-end = time.time()
-print(f"trvalo to: {end - start} sekund")
+                    n[idy] = 0
+print(n)
 
-a = list(reversed([2,1,9]))
-for idx, i in enumerate((a)):
-    if i != 9:
-        a[idx] += 1
-        break
-    else:
-        if idx + 1 == len(a):
-            a.append(1)
-            a[-2] = 0
-            break
-        else:
-            a[idx] = 0
-print(list(reversed(a)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #gpt verze - velmi rychlá
+start = time.time()
+def next_lexicographical_permutation(arr):
+    i = len(arr) - 2
+    while i >= 0 and arr[i] >= arr[i + 1]:
+        i -= 1
+    if i == -1:
+        return -1  # Žádná větší permutace neexistuje
+    j = len(arr) - 1
+    while arr[j] <= arr[i]:
+        j -= 1
+    arr[i], arr[j] = arr[j], arr[i]
+    arr[i + 1:] = reversed(arr[i + 1:])
+    return arr
+def nextf(n):
+    arr = [int(i) for i in str(n)]
+    result = next_lexicographical_permutation(arr)
+    if result == -1:
+        return -1  # Žádná větší permutace neexistuje
+    return int(''.join(map(str, result)))
+#print(nextf(85397755))
+end = time.time()
+#print(f"GPT trvalo to: {end - start} sekund")
