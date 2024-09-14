@@ -11,15 +11,8 @@ def next_begger(n):
     else:
         n[-1] += 1
     def same(max, n):
-        n = sorted(n, reverse=True)
-        valid = set([])
-        for idx, i in enumerate(max):
-            if i == n[idx]:
-                valid.add(True)
-            else:
-                valid.add(False)
-        return valid
-    while not all(same(max, n)):
+        return max == sorted(n, reverse=True)
+    while not same(max, n):
         n = list(reversed(n))
         for idy, j in enumerate((n)):   #přište jedničku k itterable
             if j != 9:
@@ -38,9 +31,25 @@ next_begger(853977)
 end = time.time()
 print(f"david trvalo to: {end - start} sekund")
 
-from line_profiler import LineProfiler
-profiler = LineProfiler()
-profiler.add_function(next_begger)
-profiler_wrapper = profiler(next_begger)
-result = profiler_wrapper(8539771472386)
-profiler.print_stats()
+# from line_profiler import LineProfiler
+# profiler = LineProfiler()
+# profiler.add_function(next_begger)
+# profiler_wrapper = profiler(next_begger)
+# result = profiler_wrapper(8539771472386)
+# profiler.print_stats()
+
+morse = ".- -.-. -..   -.-. -..   -.-. -.. .- ." # acd cd cdae
+mcdic = {
+    ".-" : "a",
+    "-..." : "b",
+    "-.-." : "c",
+    "-.." : "d",
+    "." : "e",
+}
+def mctrans(text):
+    print([mcdic[i] for i in text.split(" ") if i != ""])
+mctrans(morse)
+#print([key for key in mcdic.keys()][1])
+text = "dav"
+for i in text:
+    print(list(mcdic.keys())[list(mcdic.values()).index(i)] if i in mcdic.values() else None)
